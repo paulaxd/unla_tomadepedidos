@@ -1,0 +1,4 @@
+
+Metodo: ImportarArticulos - Clase: DAOArticulo - Mensaje: Error al leer el archivo: null
+Metodo: ImportarArticulos - Clase: DAOArticulo - Mensaje: Error al leer el archivo: [Ljava.lang.StackTraceElement;@7852e922
+Metodo: ImportarArticulos - Clase: DAOArticulo - Mensaje: Error al leer el archivo: [Ljava.lang.StackTraceElement;@7852e922
