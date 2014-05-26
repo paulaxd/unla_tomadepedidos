@@ -6,6 +6,7 @@
 
 package Negocio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,11 +21,11 @@ public class Cliente {
     private List<Pedido> lstPedidos;
     private CondicionPago condicionPago;
 
-    public Cliente(int cuil, String domicilio, String razonSocial, List<Pedido> lstPedidos, CondicionPago condicionPago) {
+    public Cliente(int cuil, String domicilio, String razonSocial, CondicionPago condicionPago) {
         this.cuil = cuil;
         this.domicilio = domicilio;
         this.razonSocial = razonSocial;
-        this.lstPedidos = lstPedidos;
+        this.lstPedidos = new ArrayList();
         this.condicionPago = condicionPago;
     }
 
