@@ -14,14 +14,12 @@ public class ArticuloPedido {
     
     private Pedido pedido;
     private Articulo articulo;
-    private CondicionPago condicionPago;
     private String direccionEnvio;
     private int cantidad;
 
-    public ArticuloPedido(Pedido pedido, Articulo articulo, CondicionPago condicionPago, String direccionEnvio, int cantidad) {
+    public ArticuloPedido(Pedido pedido, Articulo articulo, String direccionEnvio, int cantidad) {
         this.pedido = pedido;
         this.articulo = articulo;
-        this.condicionPago = condicionPago;
         this.direccionEnvio = direccionEnvio;
         this.cantidad = cantidad;
     }
@@ -42,14 +40,6 @@ public class ArticuloPedido {
         this.articulo = articulo;
     }
 
-    public CondicionPago getCondicionPago() {
-        return condicionPago;
-    }
-
-    public void setCondicionPago(CondicionPago condicionPago) {
-        this.condicionPago = condicionPago;
-    }
-
     public String getDireccionEnvio() {
         return direccionEnvio;
     }
@@ -68,7 +58,7 @@ public class ArticuloPedido {
 
     @Override
     public String toString() {
-        return "ArticuloPedido{" + "pedido=" + pedido + ", articulo=" + articulo + ", condicionPago=" + condicionPago + ", direccionEnvio=" + direccionEnvio + ", cantidad=" + cantidad + '}';
+        return "ArticuloPedido{" + "pedido=" + pedido + ", articulo=" + articulo + ", direccionEnvio=" + direccionEnvio + ", cantidad=" + cantidad + '}';
     }
     
     

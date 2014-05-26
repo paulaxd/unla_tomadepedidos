@@ -18,12 +18,14 @@ public class Cliente {
     private String domicilio;
     private String razonSocial;
     private List<Pedido> lstPedidos;
+    private CondicionPago condicionPago;
 
-    public Cliente(int cuil, String domicilio, String razonSocial, List<Pedido> lstPedidos) {
+    public Cliente(int cuil, String domicilio, String razonSocial, List<Pedido> lstPedidos, CondicionPago condicionPago) {
         this.cuil = cuil;
         this.domicilio = domicilio;
         this.razonSocial = razonSocial;
         this.lstPedidos = lstPedidos;
+        this.condicionPago = condicionPago;
     }
 
     public int getCuil() {
@@ -58,11 +60,17 @@ public class Cliente {
         this.lstPedidos = lstPedidos;
     }
 
+    public CondicionPago getCondicionPago() {
+        return condicionPago;
+    }
+
+    public void setCondicionPago(CondicionPago condicionPago) {
+        this.condicionPago = condicionPago;
+    }
+
     @Override
     public String toString() {
-        return "Cliente{" + "cuil=" + cuil + ", domicilio=" + domicilio + ", razonSocial=" + razonSocial + ", lstPedidos=" + lstPedidos + '}';
+        return "Cliente{" + "cuil=" + cuil + ", domicilio=" + domicilio + ", razonSocial=" + razonSocial + ", lstPedidos=" + lstPedidos + ", condicionPago=" + condicionPago + '}';
     }
-    
-    
-    
+
 }
