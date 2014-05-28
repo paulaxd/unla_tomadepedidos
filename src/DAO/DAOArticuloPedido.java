@@ -6,8 +6,8 @@
 
 package DAO;
 
-import Negocio.Cliente;
-import Negocio.CondicionPago;
+import Negocio.ArticuloPedido;
+import Negocio.Pedido;
 import Utiles.Utiles;
 import com.db4o.Db4o;
 import com.db4o.ObjectContainer;
@@ -15,17 +15,21 @@ import com.db4o.ObjectSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DAOCliente {
+/**
+ *
+ * @author maurogarcia
+ */
+public class DAOArticuloPedido {
     
     private static ObjectContainer db;
 
-    public static boolean AgregarCliente(Cliente cliente){
+    public static boolean AgregarArticuloPedido(ArticuloPedido articuloPedido){
         boolean flag = true;
         try{
             //Abre el archivo de la DB
             db = Db4o.openFile(Utiles.DB_FILE_PATH);
-            //Graba el cliente recibido por parametro
-            db.store(cliente);
+            //Graba el ArticuloPedido recibido por parametro
+            db.store(articuloPedido);
             //Persistir los cambios
             db.commit();
         }
@@ -34,7 +38,7 @@ public class DAOCliente {
             db.rollback();
             flag = false;
             //Graba log del error
-            DAOErrorLog.AgregarErrorLog("AgregarCliente", "DAOCliente", ex.getMessage());
+            DAOErrorLog.AgregarErrorLog("AgregarArticuloPedido", "DAOArticuloPedido", ex.getMessage());
         }
         finally{
             //Cierra la DB
@@ -44,28 +48,28 @@ public class DAOCliente {
         return flag;
     }
 
-    public static List<Cliente> GetAll(){
-       List<Cliente> lstClientes = new ArrayList();
+    public static List<ArticuloPedido> GetAll(){
+       List<ArticuloPedido> lstArticulosPedido = new ArrayList();
        try{
             //Abre el archivo de la DB
             db = Db4o.openFile(Utiles.DB_FILE_PATH); 
-            //Trae todos los objetos del tipo Cliente
-            ObjectSet<Cliente> result = db.query(Cliente.class); 
-            //Carga una lista del tipo Articulo 
-            for(Cliente a : result){
-                lstClientes.add(a);
+            //Trae todos los objetos del tipo ArticuloPedido
+            ObjectSet<ArticuloPedido> result = db.query(ArticuloPedido.class); 
+            //Carga una lista del tipo ArticuloPedido 
+            for(ArticuloPedido a : result){
+                lstArticulosPedido.add(a);
             }
        }
        catch(Exception ex){
            //Graba un log de errores en la DB
-           DAOErrorLog.AgregarErrorLog("GetAll", "DAOCliente", ex.getMessage());
+           DAOErrorLog.AgregarErrorLog("GetAll", "DAOArticuloPedido", ex.getMessage());
        }
        finally{
            //Cierra el archivo
            db.close();
        }
        //Devuelvo la lista cargada (o vacía en caso de excepcion)
-       return lstClientes;
+       return lstArticulosPedido;
     }
     
 }

@@ -7,7 +7,6 @@
 package Negocio;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  *
@@ -19,14 +18,13 @@ public class Pedido {
     private Estado estado;
     private Date fecha;
     private Cliente cliente;
-    private List<Articulo> lstArticulos;
+    
 
-    public Pedido(int codigo, Estado estado, Date fecha, Cliente cliente, List<Articulo> lstArticulos) {
+    public Pedido(int codigo, Estado estado, Date fecha, Cliente cliente) {
         this.codigo = codigo;
         this.estado = estado;
         this.fecha = fecha;
         this.cliente = cliente;
-        this.lstArticulos = lstArticulos;
     }
 
     public int getCodigo() {
@@ -61,17 +59,9 @@ public class Pedido {
         this.cliente = cliente;
     }
 
-    public List<Articulo> getLstArticulos() {
-        return lstArticulos;
-    }
-
-    public void setLstArticulos(List<Articulo> lstArticulos) {
-        this.lstArticulos = lstArticulos;
-    }
-
     @Override
     public String toString() {
-        return "Pedido{" + "codigo=" + codigo + ", estado=" + estado + ", fecha=" + fecha + ", cliente=" + cliente + ", lstArticulos=" + lstArticulos + '}';
+        return "Pedido{" + "codigo=" + codigo + ", estado=" + estado + ", fecha=" + fecha + ", cliente=" + cliente;
     }
     
     
