@@ -47,14 +47,17 @@ public class PruebaImport {
         List<Cliente> lstCliente = daoCliente.ImportarClientes();
         daoCliente.AgregarCliente(lstCliente);
         
-//        List<Estado> lstEstado = DAOEstado.ImportarEstado();
-//        DAOEstado.AgregarEstado(lstEstado);
-//        
-//        List<Pedido> lstPedido = DAOPedido.ImportarPedidos();
-//        DAOPedido.AgregarPedido(lstPedido);
-//        
-//        List<ArticuloPedido> lstArticuloPedido = DAOArticuloPedido.ImportarArticuloPedido();
-//        DAOArticuloPedido.AgregarArticuloPedido(lstArticuloPedido);
+        DAOEstado daoEstado = new DAOEstado(db);
+        List<Estado> lstEstado = daoEstado.ImportarEstado();
+        daoEstado.AgregarEstado(lstEstado);
+        
+        DAOPedido daoPedido = new DAOPedido(db);
+        List<Pedido> lstPedido = daoPedido.ImportarPedidos();
+        daoPedido.AgregarPedido(lstPedido);
+        
+        DAOArticuloPedido daoArticuloPedido = new DAOArticuloPedido(db);
+        List<ArticuloPedido> lstArticuloPedido = daoArticuloPedido.ImportarArticuloPedido();
+        daoArticuloPedido.AgregarArticuloPedido(lstArticuloPedido);
         
         for(Articulo a : daoArticulo.GetAll()){
             System.out.println(a.toString());
@@ -68,17 +71,17 @@ public class PruebaImport {
             System.out.println(c.toString());
         }
         
-//        for(Estado e : DAOEstado.GetAll()){
-//            System.out.println(e.toString());
-//        }
-//        
-//        for(Pedido p : DAOPedido.GetAll()){
-//            System.out.println(p.toString());
-//        }
-//        
-//        for(ArticuloPedido ap : DAOArticuloPedido.GetAll()){
-//            System.out.println(ap.toString());
-//        }
+        for(Estado e : daoEstado.GetAll()){
+            System.out.println(e.toString());
+        }
+        
+        for(Pedido p : daoPedido.GetAll()){
+            System.out.println(p.toString());
+        }
+        
+        for(ArticuloPedido ap : daoArticuloPedido.GetAll()){
+            System.out.println(ap.toString());
+        }
         
         DAOGeneric.CerrarDB(db);
         

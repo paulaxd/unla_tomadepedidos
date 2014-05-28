@@ -24,13 +24,15 @@ import java.util.List;
  */
 public class DAOEstado {
     
-    private static ObjectContainer db;
+    private ObjectContainer db;
 
-    public static boolean AgregarEstado(Estado estado){
+    public DAOEstado(ObjectContainer db) {
+        this.db = db;
+    }
+    
+    public boolean AgregarEstado(Estado estado){
         boolean flag = true;
         try{
-            //Abre el archivo de la DB
-            db = Db4o.openFile(Utiles.DB_FILE_PATH);
             //Graba el Estado recibido por parametro
             db.store(estado);
             //Persistir los cambios
@@ -43,19 +45,13 @@ public class DAOEstado {
             //Graba log del error
             DAOErrorLog.AgregarErrorLog("AgregarEstado", "DAOEstado", ex.getMessage());
         }
-        finally{
-            //Cierra la DB
-            db.close();
-        }
         //Devuelve TRUE en caso de exito y FALSE en caso contrario
         return flag;
     }
 
-    public static List<Estado> GetAll(){
+    public List<Estado> GetAll(){
        List<Estado> lstEstado = new ArrayList();
        try{
-            //Abre el archivo de la DB
-            db = Db4o.openFile(Utiles.DB_FILE_PATH); 
             //Trae todos los objetos del tipo Estado
             ObjectSet<Estado> result = db.query(Estado.class); 
             //Carga una lista del tipo Estado 
@@ -67,19 +63,13 @@ public class DAOEstado {
            //Graba un log de errores en la DB
            DAOErrorLog.AgregarErrorLog("GetAll", "DAOEstado", ex.getMessage());
        }
-       finally{
-           //Cierra el archivo
-           db.close();
-       }
        //Devuelvo la lista cargada (o vacía en caso de excepcion)
        return lstEstado;
     }
     
-    public static Estado GetByCodigo(int codigo){
+    public Estado GetByCodigo(int codigo){
         Estado resultado = null;
         try{
-            //Abre el archivo de la DB
-            db = Db4o.openFile(Utiles.DB_FILE_PATH); 
             //Trae todos los objetos del tipo Estado
             ObjectSet result = db.queryByExample(new Estado(codigo));
             Estado encontrado = (Estado)result.next();
@@ -89,14 +79,10 @@ public class DAOEstado {
            //Graba un log de errores en la DB
            DAOErrorLog.AgregarErrorLog("GetAll", "DAOEstado", ex.getMessage());
         }
-        finally{
-           //Cierra el archivo
-           db.close();
-        }
         return null;
     }
     
-    public static boolean AgregarEstado(List<Estado> lstEstado){
+    public  boolean AgregarEstado(List<Estado> lstEstado){
         boolean flag = true;
         
         try{
@@ -114,7 +100,7 @@ public class DAOEstado {
         return flag;
     }
     
-        public static List<Estado> ImportarEstado(){
+    public  List<Estado> ImportarEstado(){
         List<Estado> lstEstado = new ArrayList();
         
         BufferedReader br = null;

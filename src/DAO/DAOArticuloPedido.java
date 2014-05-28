@@ -24,13 +24,15 @@ import java.util.List;
  */
 public class DAOArticuloPedido {
     
-    private static ObjectContainer db;
+    private ObjectContainer db;
 
-    public static boolean AgregarArticuloPedido(ArticuloPedido articuloPedido){
+    public DAOArticuloPedido(ObjectContainer db) {
+        this.db = db;
+    }
+    
+    public boolean AgregarArticuloPedido(ArticuloPedido articuloPedido){
         boolean flag = true;
         try{
-            //Abre el archivo de la DB
-            db = Db4o.openFile(Utiles.DB_FILE_PATH);
             //Graba el ArticuloPedido recibido por parametro
             db.store(articuloPedido);
             //Persistir los cambios
@@ -43,19 +45,13 @@ public class DAOArticuloPedido {
             //Graba log del error
             DAOErrorLog.AgregarErrorLog("AgregarArticuloPedido", "DAOArticuloPedido", ex.getMessage());
         }
-        finally{
-            //Cierra la DB
-            db.close();
-        }
         //Devuelve TRUE en caso de exito y FALSE en caso contrario
         return flag;
     }
 
-    public static List<ArticuloPedido> GetAll(){
+    public List<ArticuloPedido> GetAll(){
        List<ArticuloPedido> lstArticulosPedido = new ArrayList();
        try{
-            //Abre el archivo de la DB
-            db = Db4o.openFile(Utiles.DB_FILE_PATH); 
             //Trae todos los objetos del tipo ArticuloPedido
             ObjectSet<ArticuloPedido> result = db.query(ArticuloPedido.class); 
             //Carga una lista del tipo ArticuloPedido 
@@ -67,17 +63,12 @@ public class DAOArticuloPedido {
            //Graba un log de errores en la DB
            DAOErrorLog.AgregarErrorLog("GetAll", "DAOArticuloPedido", ex.getMessage());
        }
-       finally{
-           //Cierra el archivo
-           db.close();
-       }
        //Devuelvo la lista cargada (o vacía en caso de excepcion)
        return lstArticulosPedido;
     }
     
-    public static boolean AgregarArticuloPedido(List<ArticuloPedido> lstArticuloPedido){
+    public boolean AgregarArticuloPedido(List<ArticuloPedido> lstArticuloPedido){
         boolean flag = true;
-        
         try{
             for(ArticuloPedido a : lstArticuloPedido){
                 if(!AgregarArticuloPedido(a)){
@@ -93,47 +84,48 @@ public class DAOArticuloPedido {
         return flag;
     }
     
-//        public static List<ArticuloPedido> ImportarArticuloPedido(){
-//        List<ArticuloPedido> lstArticuloPedido = new ArrayList();
-//        
-//        BufferedReader br = null;
-//	String line = "";
-//        String error = "";
-//        
-//        try {
-//		br = new BufferedReader(new FileReader(Utiles.IMPORT_FILE_PATH_ARTICULOPEDIDO));
-//		while ((line = br.readLine()) != null) {
-//                        
-//			String[] condicion = line.split(Utiles.CSV_SPLIT_BY);
-//                        // Crea un objeto y lo agrega a la lista
-//                        lstArticuloPedido.add(new ArticuloPedido(DAOPedido.GetByCodigo(Integer.parseInt(condicion[0])), 
-//                                                      DAOArticulo.GetByCodigo(Integer.parseInt(condicion[1])),
-//                                                      condicion[3],
-//                                                      Integer.parseInt(condicion[3])));
-// 
-//		}
-// 
-//	} catch (FileNotFoundException e) {
-//		error = "No se encontro el archivo: " + e.getStackTrace();
-//	} catch (IOException e) {
-//		error = "Error al leer el archivo: " + e.getStackTrace();
-//	}catch(Exception e){
-//            error = "Error al leer el archivo: " + e.getStackTrace();
-//        }
-//        finally {
-//		if (br != null) {
-//			try {
-//				br.close();
-//			} catch (IOException e) {
-//				error = "Error al cerrar el archivo: " + e.getStackTrace().toString();
-//			}
-//		}
-//                
-//                if(error.trim() != ""){
-//                    DAOErrorLog.AgregarErrorLog("ImportarArticuloPedido", "DAOArticuloPedido", error);
-//                }
-//                
-//	}
-//        return lstArticuloPedido;
-//    }
+        public List<ArticuloPedido> ImportarArticuloPedido(){
+        List<ArticuloPedido> lstArticuloPedido = new ArrayList();
+        DAOArticulo daoArticulo = new DAOArticulo(this.db);
+        DAOPedido daoPedido = new DAOPedido(this.db);
+        BufferedReader br = null;
+	String line = "";
+        String error = "";
+        
+        try {
+		br = new BufferedReader(new FileReader(Utiles.IMPORT_FILE_PATH_ARTICULOPEDIDO));
+		while ((line = br.readLine()) != null) {
+                        
+			String[] condicion = line.split(Utiles.CSV_SPLIT_BY);
+                        // Crea un objeto y lo agrega a la lista
+                        lstArticuloPedido.add(new ArticuloPedido(daoPedido.GetByCodigo(Integer.parseInt(condicion[0])), 
+                                                      daoArticulo.GetByCodigo(Integer.parseInt(condicion[1])),
+                                                      condicion[3],
+                                                      Integer.parseInt(condicion[3])));
+ 
+		}
+ 
+	} catch (FileNotFoundException e) {
+		error = "No se encontro el archivo: " + e.getStackTrace();
+	} catch (IOException e) {
+		error = "Error al leer el archivo: " + e.getStackTrace();
+	}catch(Exception e){
+            error = "Error al leer el archivo: " + e.getStackTrace();
+        }
+        finally {
+		if (br != null) {
+			try {
+				br.close();
+			} catch (IOException e) {
+				error = "Error al cerrar el archivo: " + e.getStackTrace().toString();
+			}
+		}
+                
+                if(error.trim() != ""){
+                    DAOErrorLog.AgregarErrorLog("ImportarArticuloPedido", "DAOArticuloPedido", error);
+                }
+                
+	}
+        return lstArticuloPedido;
+    }
 }
