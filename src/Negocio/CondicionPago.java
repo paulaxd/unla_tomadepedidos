@@ -19,6 +19,10 @@ public class CondicionPago {
         this.codigo = codigo;
         this.descripcion = descripcion;
     }
+    
+    public CondicionPago(int codigo){
+        this.codigo = codigo;
+    }
 
     public int getCodigo() {
         return codigo;

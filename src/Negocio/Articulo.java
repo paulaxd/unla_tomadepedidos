@@ -32,6 +32,10 @@ public class Articulo {
         this.fechaActualizacion = fechaActualizacion;
         this.vigenciaPrecio = vigenciaPrecio;
     }
+    
+    public Articulo(int codigo){
+        this.codigo = codigo;
+    }
 
     public int getCodigo() {
         return codigo;

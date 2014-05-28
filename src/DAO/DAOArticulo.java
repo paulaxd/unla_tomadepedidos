@@ -88,6 +88,30 @@ public class DAOArticulo {
        return lstArticulos;
     }
     
+    public static Articulo GetByCodigo(int codigo){
+        
+       try{
+            //Abre el archivo de la DB
+            db = Db4o.openFile(Utiles.DB_FILE_PATH); 
+            //Trae todos los objetos del tipo Articulo
+            
+            ObjectSet result = db
+                    .queryByExample(new Articulo(codigo));
+            Articulo found = (Articulo) result.next();
+            return found;
+       }
+       catch(Exception ex){
+           //Graba un log de errores en la DB
+           DAOErrorLog.AgregarErrorLog("GetByCodigo", "DAOArticulo", ex.getMessage());
+       }
+       finally{
+           //Cierra el archivo
+           db.close();
+       }
+       //Devuelvo la lista cargada (o vacía en caso de excepcion)
+       return null;
+    }
+    
     /**
      * Lee el CSV articulos y genera una lista de objetos Articulo en memoria.
      * @return Lista de articulos importados.

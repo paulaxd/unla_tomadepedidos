@@ -55,7 +55,7 @@ public class TomaPedidos {
         
         
         //Instanciamos Cliente
-        Cliente cliente1 = new Cliente(1234,"San Martin 638","Coca Cola",DAOCondicionPago.getCondicionPagoByCodigo(1));
+        Cliente cliente1 = new Cliente("1234","San Martin 638","Coca Cola",DAOCondicionPago.GetByCodigo(1));
         
         //AGREGO Cliente A LA BASE
         if (DAOCliente.AgregarCliente(cliente1)){

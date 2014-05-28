@@ -15,13 +15,13 @@ import java.util.List;
  */
 public class Cliente {
     
-    private int cuil;
+    private String cuil;
     private String domicilio;
     private String razonSocial;
     private List<Pedido> lstPedidos;
     private CondicionPago condicionPago;
 
-    public Cliente(int cuil, String domicilio, String razonSocial, CondicionPago condicionPago) {
+    public Cliente(String cuil, String domicilio, String razonSocial, CondicionPago condicionPago) {
         this.cuil = cuil;
         this.domicilio = domicilio;
         this.razonSocial = razonSocial;
@@ -29,11 +29,11 @@ public class Cliente {
         this.condicionPago = condicionPago;
     }
 
-    public int getCuil() {
+    public String getCuil() {
         return cuil;
     }
 
-    public void setCuil(int cuil) {
+    public void setCuil(String cuil) {
         this.cuil = cuil;
     }
 
