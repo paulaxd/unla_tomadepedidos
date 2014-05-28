@@ -66,8 +66,8 @@ public class TomaPedidos {
         }
         
         //Instanciamos 2 Pedidos y a cada uno le pasamos su cliente
-        //Pedido pedido1 = new Pedido(1,estado1,Date.from(Instant.now()),cliente1);
-        //Pedido pedido2 = new Pedido(1,estado1,Date.from(Instant.now()),cliente1);
+        Pedido pedido1 = new Pedido(1,estado1,Date.from(Instant.now()),cliente1);
+        Pedido pedido2 = new Pedido(1,estado1,Date.from(Instant.now()),cliente1);
         
         //Instanciamos una Lista de Pedidos y agregamos los dos Pedidos
 //        List<Pedido> lstPedido = new ArrayList();

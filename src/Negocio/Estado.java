@@ -19,6 +19,10 @@ public class Estado {
         this.codigo = codigo;
         this.descripcion = descripcion;
     }
+    
+    public Estado(int codigo){
+        this.codigo = codigo;
+    }
 
     public int getCodigo() {
         return codigo;

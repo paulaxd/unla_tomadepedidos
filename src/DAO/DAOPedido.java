@@ -66,4 +66,43 @@ public class DAOPedido {
        //Devuelvo la lista cargada (o vacía en caso de excepcion)
        return lstPedido;
     }
+    
+    public static Pedido GetByCodigo(int codigo){
+        Pedido resultado = null;
+        try{
+            //Abre el archivo de la DB
+            db = Db4o.openFile(Utiles.DB_FILE_PATH); 
+            //Trae todos los objetos del tipo Pedido
+            ObjectSet result = db.queryByExample(new Pedido(codigo));
+            Pedido encontrado = (Pedido)result.next();
+            return encontrado;
+        }
+        catch(Exception ex){
+           //Graba un log de errores en la DB
+           DAOErrorLog.AgregarErrorLog("GetAll", "DAOPedido", ex.getMessage());
+        }
+        finally{
+           //Cierra el archivo
+           db.close();
+        }
+        return null;
+    }
+    
+    public static boolean AgregarPedido(List<Pedido> lstPedido){
+        boolean flag = true;
+        
+        try{
+            for(Pedido a : lstPedido){
+                if(!AgregarPedido(a)){
+                    flag = false;
+                    break;
+                }
+            }
+        }
+        catch(Exception ex){
+            flag = false;
+        }
+        
+        return flag;
+    }
 }

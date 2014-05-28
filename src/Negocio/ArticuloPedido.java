@@ -23,7 +23,7 @@ public class ArticuloPedido {
         this.direccionEnvio = direccionEnvio;
         this.cantidad = cantidad;
     }
-
+    
     public Pedido getPedido() {
         return pedido;
     }

@@ -6,8 +6,7 @@
 
 package DAO;
 
-import Negocio.ArticuloPedido;
-import Negocio.Pedido;
+import Negocio.Estado;
 import Utiles.Utiles;
 import com.db4o.Db4o;
 import com.db4o.ObjectContainer;
@@ -19,17 +18,17 @@ import java.util.List;
  *
  * @author maurogarcia
  */
-public class DAOArticuloPedido {
+public class DAOEstado {
     
     private static ObjectContainer db;
 
-    public static boolean AgregarArticuloPedido(ArticuloPedido articuloPedido){
+    public static boolean AgregarEstado(Estado estado){
         boolean flag = true;
         try{
             //Abre el archivo de la DB
             db = Db4o.openFile(Utiles.DB_FILE_PATH);
-            //Graba el ArticuloPedido recibido por parametro
-            db.store(articuloPedido);
+            //Graba el Estado recibido por parametro
+            db.store(estado);
             //Persistir los cambios
             db.commit();
         }
@@ -38,7 +37,7 @@ public class DAOArticuloPedido {
             db.rollback();
             flag = false;
             //Graba log del error
-            DAOErrorLog.AgregarErrorLog("AgregarArticuloPedido", "DAOArticuloPedido", ex.getMessage());
+            DAOErrorLog.AgregarErrorLog("AgregarEstado", "DAOEstado", ex.getMessage());
         }
         finally{
             //Cierra la DB
@@ -48,36 +47,57 @@ public class DAOArticuloPedido {
         return flag;
     }
 
-    public static List<ArticuloPedido> GetAll(){
-       List<ArticuloPedido> lstArticulosPedido = new ArrayList();
+    public static List<Estado> GetAll(){
+       List<Estado> lstEstado = new ArrayList();
        try{
             //Abre el archivo de la DB
             db = Db4o.openFile(Utiles.DB_FILE_PATH); 
-            //Trae todos los objetos del tipo ArticuloPedido
-            ObjectSet<ArticuloPedido> result = db.query(ArticuloPedido.class); 
-            //Carga una lista del tipo ArticuloPedido 
-            for(ArticuloPedido a : result){
-                lstArticulosPedido.add(a);
+            //Trae todos los objetos del tipo Estado
+            ObjectSet<Estado> result = db.query(Estado.class); 
+            //Carga una lista del tipo Estado 
+            for(Estado a : result){
+                lstEstado.add(a);
             }
        }
        catch(Exception ex){
            //Graba un log de errores en la DB
-           DAOErrorLog.AgregarErrorLog("GetAll", "DAOArticuloPedido", ex.getMessage());
+           DAOErrorLog.AgregarErrorLog("GetAll", "DAOEstado", ex.getMessage());
        }
        finally{
            //Cierra el archivo
            db.close();
        }
        //Devuelvo la lista cargada (o vacía en caso de excepcion)
-       return lstArticulosPedido;
+       return lstEstado;
     }
     
-    public static boolean AgregarArticuloPedido(List<ArticuloPedido> lstArticuloPedido){
+    public static Estado GetByCodigo(int codigo){
+        Estado resultado = null;
+        try{
+            //Abre el archivo de la DB
+            db = Db4o.openFile(Utiles.DB_FILE_PATH); 
+            //Trae todos los objetos del tipo Estado
+            ObjectSet result = db.queryByExample(new Estado(codigo));
+            Estado encontrado = (Estado)result.next();
+            return encontrado;
+        }
+        catch(Exception ex){
+           //Graba un log de errores en la DB
+           DAOErrorLog.AgregarErrorLog("GetAll", "DAOEstado", ex.getMessage());
+        }
+        finally{
+           //Cierra el archivo
+           db.close();
+        }
+        return null;
+    }
+    
+    public static boolean AgregarEstado(List<Estado> lstEstado){
         boolean flag = true;
         
         try{
-            for(ArticuloPedido a : lstArticuloPedido){
-                if(!AgregarArticuloPedido(a)){
+            for(Estado a : lstEstado){
+                if(!AgregarEstado(a)){
                     flag = false;
                     break;
                 }

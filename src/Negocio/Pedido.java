@@ -26,6 +26,10 @@ public class Pedido {
         this.fecha = fecha;
         this.cliente = cliente;
     }
+    
+    public Pedido(int codigo){
+        this.codigo = codigo;
+    }
 
     public int getCodigo() {
         return codigo;
