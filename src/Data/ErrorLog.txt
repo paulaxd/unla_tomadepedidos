@@ -8,3 +8,12 @@ Metodo: GetByCodigo - Clase: DAOCondicionPago - Mensaje: null
 Metodo: GetByCodigo - Clase: DAOCondicionPago - Mensaje: null
 Metodo: GetByCodigo - Clase: DAOCondicionPago - Mensaje: null
 Metodo: GetByCodigo - Clase: DAOCondicionPago - Mensaje: null
+Metodo: ImportarEstado - Clase: DAOEstado - Mensaje: No se encontro el archivo: [Ljava.lang.StackTraceElement;@60704c
+Metodo: GetAll - Clase: DAOEstado - Mensaje: null
+Metodo: ImportarPedidos - Clase: DAOPedido - Mensaje: Error al leer el archivo: [Ljava.lang.StackTraceElement;@ec756bd
+Metodo: GetByCodigo - Clase: DAOPedido - Mensaje: null
+Metodo: ImportarArticuloPedido - Clase: DAOArticuloPedido - Mensaje: Error al leer el archivo: [Ljava.lang.StackTraceElement;@4278a03f
+28/05/2014 00:38:57 - Metodo: ImportarPedidos - Clase: DAOPedido - Mensaje: Error al leer el archivo: [Ljava.lang.StackTraceElement;@d4342c2
+28/05/2014 00:38:57 - Metodo: GetByCodigo - Clase: DAOPedido - Mensaje: null
+28/05/2014 00:38:57 - Metodo: ImportarArticuloPedido - Clase: DAOArticuloPedido - Mensaje: Error al leer el archivo: [Ljava.lang.StackTraceElement;@3cc2931c
+28/05/2014 00:46:15 - Metodo: ImportarArticuloPedido - Clase: DAOArticuloPedido - Mensaje: Error al leer el archivo: [Ljava.lang.StackTraceElement;@7586beff

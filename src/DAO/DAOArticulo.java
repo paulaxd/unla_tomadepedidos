@@ -93,7 +93,6 @@ public class DAOArticulo {
        try{
             //Abre el archivo de la DB
             db = Db4o.openFile(Utiles.DB_FILE_PATH); 
-            //Trae todos los objetos del tipo Articulo
             
             ObjectSet result = db
                     .queryByExample(new Articulo(codigo));

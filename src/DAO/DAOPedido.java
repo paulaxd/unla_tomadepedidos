@@ -11,6 +11,11 @@ import Utiles.Utiles;
 import com.db4o.Db4o;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,7 +84,7 @@ public class DAOPedido {
         }
         catch(Exception ex){
            //Graba un log de errores en la DB
-           DAOErrorLog.AgregarErrorLog("GetAll", "DAOPedido", ex.getMessage());
+           DAOErrorLog.AgregarErrorLog("GetByCodigo", "DAOPedido", ex.getMessage());
         }
         finally{
            //Cierra el archivo
@@ -105,4 +110,48 @@ public class DAOPedido {
         
         return flag;
     }
+    
+    public static List<Pedido> ImportarPedidos(){
+        List<Pedido> lstPedidos = new ArrayList();
+        
+        BufferedReader br = null;
+	String line = "";
+        String error = "";
+        
+        try {
+		br = new BufferedReader(new FileReader(Utiles.IMPORT_FILE_PATH_PEDIDOS));
+		while ((line = br.readLine()) != null) {
+                        
+			String[] pedido = line.split(Utiles.CSV_SPLIT_BY);
+                        // Crea un objeto y lo agrega a la lista
+                        lstPedidos.add(new Pedido(Integer.parseInt(pedido[0]), 
+                                                  DAOEstado.GetByCodigo(Integer.parseInt(pedido[1])),
+                                                  Date.valueOf(pedido[2]),
+                                                  DAOCliente.GetByCodigo(pedido[3])));
+		}
+ 
+	} catch (FileNotFoundException e) {
+		error = "No se encontro el archivo: " + e.getStackTrace();
+	} catch (IOException e) {
+		error = "Error al leer el archivo: " + e.getStackTrace();
+	}catch(Exception e){
+            error = "Error al leer el archivo: " + e.getStackTrace();
+        }
+        finally {
+		if (br != null) {
+			try {
+				br.close();
+			} catch (IOException e) {
+				error = "Error al cerrar el archivo: " + e.getStackTrace().toString();
+			}
+		}
+                
+                if(error.trim() != ""){
+                    DAOErrorLog.AgregarErrorLog("ImportarPedidos", "DAOPedido", error);
+                }
+                
+	}
+        return lstPedidos;
+    }
+
 }

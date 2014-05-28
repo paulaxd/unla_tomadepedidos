@@ -7,12 +7,18 @@
 package Vista;
 
 import DAO.DAOArticulo;
+import DAO.DAOArticuloPedido;
 import DAO.DAOCliente;
 import DAO.DAOCondicionPago;
+import DAO.DAOEstado;
 import DAO.DAOGeneric;
+import DAO.DAOPedido;
 import Negocio.Articulo;
+import Negocio.ArticuloPedido;
 import Negocio.Cliente;
 import Negocio.CondicionPago;
+import Negocio.Estado;
+import Negocio.Pedido;
 import java.util.List;
 
 /**
@@ -36,21 +42,38 @@ public class PruebaImport {
         List<Cliente> lstCliente = DAOCliente.ImportarClientes();
         DAOCliente.AgregarCliente(lstCliente);
         
-        for(Articulo a : lst){
+        List<Estado> lstEstado = DAOEstado.ImportarEstado();
+        DAOEstado.AgregarEstado(lstEstado);
+        
+        List<Pedido> lstPedido = DAOPedido.ImportarPedidos();
+        DAOPedido.AgregarPedido(lstPedido);
+        
+        List<ArticuloPedido> lstArticuloPedido = DAOArticuloPedido.ImportarArticuloPedido();
+        DAOArticuloPedido.AgregarArticuloPedido(lstArticuloPedido);
+        
+        for(Articulo a : DAOArticulo.GetAll()){
             System.out.println(a.toString());
         }
         
-        for(Cliente c : lstCliente){
+        for(Cliente c : DAOCliente.GetAll()){
             System.out.println(c.toString());
         }
         
-        for(CondicionPago c : lstCondicion){
+        for(CondicionPago c : DAOCondicionPago.GetAll()){
             System.out.println(c.toString());
         }
         
-//        String[] propiedades = { "codigo", "precio", "nombre", "cantidadPorBulto", "caracteristicas", "fotografiaURL", "fechaActualizacion", "vigenciaPrecio" };
-//        String json = Utiles.Utiles.CsvToJson(Utiles.Utiles.IMPORT_FILE_PATH_ARTICULOS, propiedades, "Articulos");
-//        System.out.println(json);
+        for(Estado e : DAOEstado.GetAll()){
+            System.out.println(e.toString());
+        }
+        
+        for(Pedido p : DAOPedido.GetAll()){
+            System.out.println(p.toString());
+        }
+        
+        for(ArticuloPedido ap : DAOArticuloPedido.GetAll()){
+            System.out.println(ap.toString());
+        }
         
     }
     

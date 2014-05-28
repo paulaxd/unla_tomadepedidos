@@ -28,6 +28,10 @@ public class Cliente {
         this.lstPedidos = new ArrayList();
         this.condicionPago = condicionPago;
     }
+    
+    public Cliente(String cuil){
+        this.cuil = cuil;
+    }
 
     public String getCuil() {
         return cuil;

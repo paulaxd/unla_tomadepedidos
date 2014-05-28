@@ -64,6 +64,29 @@ public class DAOCliente {
         
         return flag;
     }
+    
+    public static Cliente GetByCodigo(String codigo){
+        
+       try{
+            //Abre el archivo de la DB
+            db = Db4o.openFile(Utiles.DB_FILE_PATH); 
+            
+            ObjectSet result = db
+                    .queryByExample(new Cliente(codigo));
+            Cliente found = (Cliente) result.next();
+            return found;
+       }
+       catch(Exception ex){
+           //Graba un log de errores en la DB
+           DAOErrorLog.AgregarErrorLog("GetByCodigo", "DAOCliente", ex.getMessage());
+       }
+       finally{
+           //Cierra el archivo
+           db.close();
+       }
+       //Devuelvo la lista cargada (o vacía en caso de excepcion)
+       return null;
+    }
 
     public static List<Cliente> GetAll(){
        List<Cliente> lstClientes = new ArrayList();

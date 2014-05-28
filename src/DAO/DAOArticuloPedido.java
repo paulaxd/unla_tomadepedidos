@@ -12,6 +12,10 @@ import Utiles.Utiles;
 import com.db4o.Db4o;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,5 +92,49 @@ public class DAOArticuloPedido {
         }
         
         return flag;
+    }
+    
+        public static List<ArticuloPedido> ImportarArticuloPedido(){
+        List<ArticuloPedido> lstArticuloPedido = new ArrayList();
+        
+        BufferedReader br = null;
+	String line = "";
+        String error = "";
+        
+        try {
+		br = new BufferedReader(new FileReader(Utiles.IMPORT_FILE_PATH_ARTICULOPEDIDO));
+		while ((line = br.readLine()) != null) {
+                        
+			String[] condicion = line.split(Utiles.CSV_SPLIT_BY);
+                        // Crea un objeto y lo agrega a la lista
+                        lstArticuloPedido.add(new ArticuloPedido(DAOPedido.GetByCodigo(Integer.parseInt(condicion[0])), 
+                                                      DAOArticulo.GetByCodigo(Integer.parseInt(condicion[1])),
+                                                      condicion[3],
+                                                      Integer.parseInt(condicion[3])));
+ 
+		}
+ 
+	} catch (FileNotFoundException e) {
+		error = "No se encontro el archivo: " + e.getStackTrace();
+	} catch (IOException e) {
+		error = "Error al leer el archivo: " + e.getStackTrace();
+	}catch(Exception e){
+            error = "Error al leer el archivo: " + e.getStackTrace();
+        }
+        finally {
+		if (br != null) {
+			try {
+				br.close();
+			} catch (IOException e) {
+				error = "Error al cerrar el archivo: " + e.getStackTrace().toString();
+			}
+		}
+                
+                if(error.trim() != ""){
+                    DAOErrorLog.AgregarErrorLog("ImportarArticuloPedido", "DAOArticuloPedido", error);
+                }
+                
+	}
+        return lstArticuloPedido;
     }
 }
