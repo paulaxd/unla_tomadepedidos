@@ -11,11 +11,11 @@ import Utiles.Utiles;
 import com.db4o.Db4o;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
+import com.db4o.query.Predicate;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,13 +25,15 @@ import java.util.List;
  */
 public class DAOCondicionPago {
     
-    private static ObjectContainer db;
+    private ObjectContainer db;
 
-    public static boolean AgregarCondicionPago(CondicionPago condicionPago){
+    public DAOCondicionPago(ObjectContainer db) {
+        this.db = db;
+    }
+
+    public boolean AgregarCondicionPago(CondicionPago condicionPago){
         boolean flag = true;
         try{
-            //Abre el archivo de la DB
-            db = Db4o.openFile(Utiles.DB_FILE_PATH);
             //Graba la condicion de pago recibida por parametro
             db.store(condicionPago);
             //Persistir los cambios
@@ -44,15 +46,11 @@ public class DAOCondicionPago {
             //Graba log del error
             DAOErrorLog.AgregarErrorLog("AgregarCondicionPago", "DAOCondicionPago", ex.getMessage());
         }
-        finally{
-            //Cierra la DB
-            db.close();
-        }
         //Devuelve TRUE en caso de exito y FALSE en caso contrario
         return flag;
     }
     
-    public static boolean AgregarCondicionPago(List<CondicionPago> lstCondicionPago){
+    public boolean AgregarCondicionPago(List<CondicionPago> lstCondicionPago){
         boolean flag = true;
         
         try{
@@ -70,11 +68,9 @@ public class DAOCondicionPago {
         return flag;
     }
 
-    public static List<CondicionPago> GetAll(){
+    public List<CondicionPago> GetAll(){
        List<CondicionPago> lstCondicionPago = new ArrayList();
        try{
-            //Abre el archivo de la DB
-            db = Db4o.openFile(Utiles.DB_FILE_PATH); 
             //Trae todos los objetos del tipo CondicionPago
             ObjectSet<CondicionPago> result = db.query(CondicionPago.class); 
             //Carga una lista del tipo CondicionPago 
@@ -86,36 +82,32 @@ public class DAOCondicionPago {
            //Graba un log de errores en la DB
            DAOErrorLog.AgregarErrorLog("GetAll", "DAOCondicionPago", ex.getMessage());
        }
-       finally{
-           //Cierra el archivo
-           db.close();
-       }
        //Devuelvo la lista cargada (o vacía en caso de excepcion)
        return lstCondicionPago;
     }
     
-    public static CondicionPago GetByCodigo(int codigo){
+    public CondicionPago GetByCodigo(int codigo){
         CondicionPago resultado = null;
         try{
-            //Abre el archivo de la DB
-            db = Db4o.openFile(Utiles.DB_FILE_PATH); 
             //Trae todos los objetos del tipo CondicionPago
-            ObjectSet result = db.queryByExample(new CondicionPago(codigo));
-            CondicionPago encontrado = (CondicionPago)result.next();
-            return encontrado;
+//            ObjectSet result = db.queryByExample(new CondicionPago(codigo));
+//            CondicionPago encontrado = (CondicionPago)result.next();
+            
+            List<CondicionPago> result = db.query(new Predicate<CondicionPago>() {
+                public boolean match(CondicionPago c) {
+                    return c.getCodigo() == codigo;
+                }
+            });
+            return (CondicionPago)result.get(0);
         }
         catch(Exception ex){
            //Graba un log de errores en la DB
            DAOErrorLog.AgregarErrorLog("GetByCodigo", "DAOCondicionPago", ex.getMessage());
         }
-        finally{
-           //Cierra el archivo
-           db.close();
-        }
         return null;
     }
     
-    public static List<CondicionPago> ImportarCondicionPago(){
+    public List<CondicionPago> ImportarCondicionPago(){
         List<CondicionPago> lstCondicionesPago = new ArrayList();
         
         BufferedReader br = null;

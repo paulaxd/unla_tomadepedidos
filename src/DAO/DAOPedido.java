@@ -111,47 +111,47 @@ public class DAOPedido {
         return flag;
     }
     
-    public static List<Pedido> ImportarPedidos(){
-        List<Pedido> lstPedidos = new ArrayList();
-        
-        BufferedReader br = null;
-	String line = "";
-        String error = "";
-        
-        try {
-		br = new BufferedReader(new FileReader(Utiles.IMPORT_FILE_PATH_PEDIDOS));
-		while ((line = br.readLine()) != null) {
-                        
-			String[] pedido = line.split(Utiles.CSV_SPLIT_BY);
-                        // Crea un objeto y lo agrega a la lista
-                        lstPedidos.add(new Pedido(Integer.parseInt(pedido[0]), 
-                                                  DAOEstado.GetByCodigo(Integer.parseInt(pedido[1])),
-                                                  Date.valueOf(pedido[2]),
-                                                  DAOCliente.GetByCodigo(pedido[3])));
-		}
- 
-	} catch (FileNotFoundException e) {
-		error = "No se encontro el archivo: " + e.getStackTrace();
-	} catch (IOException e) {
-		error = "Error al leer el archivo: " + e.getStackTrace();
-	}catch(Exception e){
-            error = "Error al leer el archivo: " + e.getStackTrace();
-        }
-        finally {
-		if (br != null) {
-			try {
-				br.close();
-			} catch (IOException e) {
-				error = "Error al cerrar el archivo: " + e.getStackTrace().toString();
-			}
-		}
-                
-                if(error.trim() != ""){
-                    DAOErrorLog.AgregarErrorLog("ImportarPedidos", "DAOPedido", error);
-                }
-                
-	}
-        return lstPedidos;
-    }
+//    public static List<Pedido> ImportarPedidos(){
+//        List<Pedido> lstPedidos = new ArrayList();
+//        
+//        BufferedReader br = null;
+//	String line = "";
+//        String error = "";
+//        
+//        try {
+//		br = new BufferedReader(new FileReader(Utiles.IMPORT_FILE_PATH_PEDIDOS));
+//		while ((line = br.readLine()) != null) {
+//                        
+//			String[] pedido = line.split(Utiles.CSV_SPLIT_BY);
+//                        // Crea un objeto y lo agrega a la lista
+//                        lstPedidos.add(new Pedido(Integer.parseInt(pedido[0]), 
+//                                                  DAOEstado.GetByCodigo(Integer.parseInt(pedido[1])),
+//                                                  Date.valueOf(pedido[2]),
+//                                                  DAOCliente.GetByCodigo(pedido[3])));
+//		}
+// 
+//	} catch (FileNotFoundException e) {
+//		error = "No se encontro el archivo: " + e.getStackTrace();
+//	} catch (IOException e) {
+//		error = "Error al leer el archivo: " + e.getStackTrace();
+//	}catch(Exception e){
+//            error = "Error al leer el archivo: " + e.getStackTrace();
+//        }
+//        finally {
+//		if (br != null) {
+//			try {
+//				br.close();
+//			} catch (IOException e) {
+//				error = "Error al cerrar el archivo: " + e.getStackTrace().toString();
+//			}
+//		}
+//                
+//                if(error.trim() != ""){
+//                    DAOErrorLog.AgregarErrorLog("ImportarPedidos", "DAOPedido", error);
+//                }
+//                
+//	}
+//        return lstPedidos;
+//    }
 
 }

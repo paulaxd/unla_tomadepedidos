@@ -17,3 +17,4 @@ Metodo: ImportarArticuloPedido - Clase: DAOArticuloPedido - Mensaje: Error al le
 28/05/2014 00:38:57 - Metodo: GetByCodigo - Clase: DAOPedido - Mensaje: null
 28/05/2014 00:38:57 - Metodo: ImportarArticuloPedido - Clase: DAOArticuloPedido - Mensaje: Error al leer el archivo: [Ljava.lang.StackTraceElement;@3cc2931c
 28/05/2014 00:46:15 - Metodo: ImportarArticuloPedido - Clase: DAOArticuloPedido - Mensaje: Error al leer el archivo: [Ljava.lang.StackTraceElement;@7586beff
+28/05/2014 01:35:04 - Metodo: AgregarArticulo - Clase: DAOArticulo - Mensaje: C:\Users\m_pau_000\Documents\NetBeansProjects\TomaPedidos\src\Data\TomaPedidosDB

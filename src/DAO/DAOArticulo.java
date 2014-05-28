@@ -19,13 +19,15 @@ import java.util.List;
  */
 public class DAOArticulo {
     
-    private static ObjectContainer db;
+    private ObjectContainer db;
+
+    public DAOArticulo(ObjectContainer db) {
+        this.db = db;
+    }
     
-    public static boolean AgregarArticulo(Articulo articulo){
+    public boolean AgregarArticulo(Articulo articulo){
         boolean flag = true;
         try{
-            //Abre el archivo de la DB
-            db = Db4o.openFile(Utiles.DB_FILE_PATH);
             //Graba el articulo recibido por parametro
             db.store(articulo);
             //Persistir los cambios
@@ -38,15 +40,12 @@ public class DAOArticulo {
             //Graba log del error
             DAOErrorLog.AgregarErrorLog("AgregarArticulo", "DAOArticulo", ex.getMessage());
         }
-        finally{
-            //Cierra la DB
-            db.close();
-        }
+
         //Devuelve TRUE en caso de exito y FALSE en caso contrario
         return flag;
     }
     
-    public static boolean AgregarArticulo(List<Articulo> lstArticulo){
+    public boolean AgregarArticulo(List<Articulo> lstArticulo){
         boolean flag = true;
         
         try{
@@ -64,11 +63,9 @@ public class DAOArticulo {
         return flag;
     }
     
-    public static List<Articulo> GetAll(){
+    public List<Articulo> GetAll(){
        List<Articulo> lstArticulos = new ArrayList();
        try{
-            //Abre el archivo de la DB
-            db = Db4o.openFile(Utiles.DB_FILE_PATH); 
             //Trae todos los objetos del tipo Articulo
             ObjectSet<Articulo> result = db.query(Articulo.class); 
             //Carga una lista del tipo Articulo 
@@ -80,20 +77,13 @@ public class DAOArticulo {
            //Graba un log de errores en la DB
            DAOErrorLog.AgregarErrorLog("GetAll", "DAOArticulo", ex.getMessage());
        }
-       finally{
-           //Cierra el archivo
-           db.close();
-       }
        //Devuelvo la lista cargada (o vacía en caso de excepcion)
        return lstArticulos;
     }
     
-    public static Articulo GetByCodigo(int codigo){
+    public Articulo GetByCodigo(int codigo){
         
        try{
-            //Abre el archivo de la DB
-            db = Db4o.openFile(Utiles.DB_FILE_PATH); 
-            
             ObjectSet result = db
                     .queryByExample(new Articulo(codigo));
             Articulo found = (Articulo) result.next();
@@ -103,10 +93,6 @@ public class DAOArticulo {
            //Graba un log de errores en la DB
            DAOErrorLog.AgregarErrorLog("GetByCodigo", "DAOArticulo", ex.getMessage());
        }
-       finally{
-           //Cierra el archivo
-           db.close();
-       }
        //Devuelvo la lista cargada (o vacía en caso de excepcion)
        return null;
     }
@@ -115,7 +101,7 @@ public class DAOArticulo {
      * Lee el CSV articulos y genera una lista de objetos Articulo en memoria.
      * @return Lista de articulos importados.
      */
-    public static List<Articulo> ImportarArticulos(){
+    public List<Articulo> ImportarArticulos(){
         List<Articulo> lstArticulos = new ArrayList();
         
         BufferedReader br = null;

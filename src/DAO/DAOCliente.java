@@ -20,13 +20,15 @@ import java.util.List;
 
 public class DAOCliente {
     
-    private static ObjectContainer db;
+    private ObjectContainer db;
 
-    public static boolean AgregarCliente(Cliente cliente){
+    public DAOCliente(ObjectContainer db) {
+        this.db = db;
+    }
+    
+    public boolean AgregarCliente(Cliente cliente){
         boolean flag = true;
         try{
-            //Abre el archivo de la DB
-            db = Db4o.openFile(Utiles.DB_FILE_PATH);
             //Graba el cliente recibido por parametro
             db.store(cliente);
             //Persistir los cambios
@@ -39,15 +41,11 @@ public class DAOCliente {
             //Graba log del error
             DAOErrorLog.AgregarErrorLog("AgregarCliente", "DAOCliente", ex.getMessage());
         }
-        finally{
-            //Cierra la DB
-            db.close();
-        }
         //Devuelve TRUE en caso de exito y FALSE en caso contrario
         return flag;
     }
     
-    public static boolean AgregarCliente(List<Cliente> lstCliente){
+    public boolean AgregarCliente(List<Cliente> lstCliente){
         boolean flag = true;
         
         try{
@@ -65,12 +63,9 @@ public class DAOCliente {
         return flag;
     }
     
-    public static Cliente GetByCodigo(String codigo){
+    public Cliente GetByCodigo(String codigo){
         
        try{
-            //Abre el archivo de la DB
-            db = Db4o.openFile(Utiles.DB_FILE_PATH); 
-            
             ObjectSet result = db
                     .queryByExample(new Cliente(codigo));
             Cliente found = (Cliente) result.next();
@@ -80,19 +75,13 @@ public class DAOCliente {
            //Graba un log de errores en la DB
            DAOErrorLog.AgregarErrorLog("GetByCodigo", "DAOCliente", ex.getMessage());
        }
-       finally{
-           //Cierra el archivo
-           db.close();
-       }
        //Devuelvo la lista cargada (o vacía en caso de excepcion)
        return null;
     }
 
-    public static List<Cliente> GetAll(){
+    public List<Cliente> GetAll(){
        List<Cliente> lstClientes = new ArrayList();
        try{
-            //Abre el archivo de la DB
-            db = Db4o.openFile(Utiles.DB_FILE_PATH); 
             //Trae todos los objetos del tipo Cliente
             ObjectSet<Cliente> result = db.query(Cliente.class); 
             //Carga una lista del tipo Articulo 
@@ -104,17 +93,13 @@ public class DAOCliente {
            //Graba un log de errores en la DB
            DAOErrorLog.AgregarErrorLog("GetAll", "DAOCliente", ex.getMessage());
        }
-       finally{
-           //Cierra el archivo
-           db.close();
-       }
        //Devuelvo la lista cargada (o vacía en caso de excepcion)
        return lstClientes;
     }
     
-    public static List<Cliente> ImportarClientes(){
+    public List<Cliente> ImportarClientes(){
         List<Cliente> lstClientes = new ArrayList();
-        
+        DAOCondicionPago daoCondicionPago = new DAOCondicionPago(this.db);
         BufferedReader br = null;
 	String line = "";
         String error = "";
@@ -128,7 +113,7 @@ public class DAOCliente {
                         lstClientes.add(new Cliente(cliente[0], 
                                                     cliente[1],
                                                     cliente[2],
-                                                    DAOCondicionPago.GetByCodigo(Integer.parseInt(cliente[3]))));
+                                                    daoCondicionPago.GetByCodigo(Integer.parseInt(cliente[3]))));
  
 		}
  

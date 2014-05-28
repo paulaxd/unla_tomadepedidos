@@ -19,6 +19,7 @@ import Negocio.Cliente;
 import Negocio.CondicionPago;
 import Negocio.Estado;
 import Negocio.Pedido;
+import com.db4o.ObjectContainer;
 import java.util.List;
 
 /**
@@ -32,48 +33,54 @@ public class PruebaImport {
      */
     public static void main(String[] args) {
         DAOGeneric.BorrarDB();
+        ObjectContainer db = DAOGeneric.AbrirDB();
         
-        List<Articulo> lst = DAOArticulo.ImportarArticulos();
-        DAOArticulo.AgregarArticulo(lst);
+        DAOArticulo daoArticulo = new DAOArticulo(db);
+        List<Articulo> lst = daoArticulo.ImportarArticulos();
+        daoArticulo.AgregarArticulo(lst);
         
-        List<CondicionPago> lstCondicion = DAOCondicionPago.ImportarCondicionPago();
-        DAOCondicionPago.AgregarCondicionPago(lstCondicion);
+        DAOCondicionPago daoCondicionPago = new DAOCondicionPago(db);
+        List<CondicionPago> lstCondicion = daoCondicionPago.ImportarCondicionPago();
+        daoCondicionPago.AgregarCondicionPago(lstCondicion);
         
-        List<Cliente> lstCliente = DAOCliente.ImportarClientes();
-        DAOCliente.AgregarCliente(lstCliente);
+        DAOCliente daoCliente = new DAOCliente(db);
+        List<Cliente> lstCliente = daoCliente.ImportarClientes();
+        daoCliente.AgregarCliente(lstCliente);
         
-        List<Estado> lstEstado = DAOEstado.ImportarEstado();
-        DAOEstado.AgregarEstado(lstEstado);
+//        List<Estado> lstEstado = DAOEstado.ImportarEstado();
+//        DAOEstado.AgregarEstado(lstEstado);
+//        
+//        List<Pedido> lstPedido = DAOPedido.ImportarPedidos();
+//        DAOPedido.AgregarPedido(lstPedido);
+//        
+//        List<ArticuloPedido> lstArticuloPedido = DAOArticuloPedido.ImportarArticuloPedido();
+//        DAOArticuloPedido.AgregarArticuloPedido(lstArticuloPedido);
         
-        List<Pedido> lstPedido = DAOPedido.ImportarPedidos();
-        DAOPedido.AgregarPedido(lstPedido);
-        
-        List<ArticuloPedido> lstArticuloPedido = DAOArticuloPedido.ImportarArticuloPedido();
-        DAOArticuloPedido.AgregarArticuloPedido(lstArticuloPedido);
-        
-        for(Articulo a : DAOArticulo.GetAll()){
+        for(Articulo a : daoArticulo.GetAll()){
             System.out.println(a.toString());
         }
         
-        for(Cliente c : DAOCliente.GetAll()){
+        for(Cliente c : daoCliente.GetAll()){
             System.out.println(c.toString());
         }
         
-        for(CondicionPago c : DAOCondicionPago.GetAll()){
+        for(CondicionPago c : daoCondicionPago.GetAll()){
             System.out.println(c.toString());
         }
         
-        for(Estado e : DAOEstado.GetAll()){
-            System.out.println(e.toString());
-        }
+//        for(Estado e : DAOEstado.GetAll()){
+//            System.out.println(e.toString());
+//        }
+//        
+//        for(Pedido p : DAOPedido.GetAll()){
+//            System.out.println(p.toString());
+//        }
+//        
+//        for(ArticuloPedido ap : DAOArticuloPedido.GetAll()){
+//            System.out.println(ap.toString());
+//        }
         
-        for(Pedido p : DAOPedido.GetAll()){
-            System.out.println(p.toString());
-        }
-        
-        for(ArticuloPedido ap : DAOArticuloPedido.GetAll()){
-            System.out.println(ap.toString());
-        }
+        DAOGeneric.CerrarDB(db);
         
     }
     

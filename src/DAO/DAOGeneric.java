@@ -8,6 +8,8 @@ package DAO;
 
 import java.io.File;
 import Utiles.Utiles;
+import com.db4o.Db4o;
+import com.db4o.ObjectContainer;
 
 /**
  * Clase con metodos genericos de la DB.
@@ -30,6 +32,25 @@ public class DAOGeneric {
             DAOErrorLog.AgregarErrorLog("BorrarDB", "DAOGeneric", ex.getMessage());
         }
         return flag;
+    }
+    
+    public static ObjectContainer AbrirDB(){
+        try{
+            return Db4o.openFile(Utiles.DB_FILE_PATH);
+        }
+        catch(Exception ex){
+            DAOErrorLog.AgregarErrorLog("AbrirDB", "DAOGeneric", ex.getMessage());
+        }
+        return null;
+    }
+    
+    public static void CerrarDB(ObjectContainer db){
+        try{
+            db.close();
+        }
+        catch(Exception ex){
+            DAOErrorLog.AgregarErrorLog("CerrarDB", "DAOGeneric", ex.getMessage());
+        }
     }
     
 }
