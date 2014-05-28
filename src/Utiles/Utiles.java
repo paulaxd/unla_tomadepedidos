@@ -21,16 +21,16 @@ import java.util.List;
  */
 public final class Utiles {
     //Ruta del archivo de la DB
-    public static final String DB_FILE_PATH = System.getProperty("user.dir") + "\\src\\Data\\TomaPedidosDB";
+    public static final String DB_FILE_PATH = System.getProperty("user.dir") + "/src/Data/TomaPedidosDB";
     //Ruta del archivo de importación
-    public static final String IMPORT_FILE_PATH_ARTICULOS = System.getProperty("user.dir") + "\\src\\Data\\Articulos.csv";
-    public static final String IMPORT_FILE_PATH_CONDICIONESPAGO = System.getProperty("user.dir") + "\\src\\Data\\CondicionesPago.csv";
-    public static final String IMPORT_FILE_PATH_CLIENTES = System.getProperty("user.dir") + "\\src\\Data\\Clientes.csv";
-    public static final String IMPORT_FILE_PATH_PEDIDOS = System.getProperty("user.dir") + "\\src\\Data\\Pedidos.csv";
-    public static final String IMPORT_FILE_PATH_ESTADOS = System.getProperty("user.dir") + "\\src\\Data\\Estados.csv";
-    public static final String IMPORT_FILE_PATH_ARTICULOPEDIDO = System.getProperty("user.dir") + "\\src\\Data\\ArticuloPedido.csv";
+    public static final String IMPORT_FILE_PATH_ARTICULOS = System.getProperty("user.dir") + "/src/Data/Articulos.csv";
+    public static final String IMPORT_FILE_PATH_CONDICIONESPAGO = System.getProperty("user.dir") + "/src/Data/CondicionesPago.csv";
+    public static final String IMPORT_FILE_PATH_CLIENTES = System.getProperty("user.dir") + "/src/Data/Clientes.csv";
+    public static final String IMPORT_FILE_PATH_PEDIDOS = System.getProperty("user.dir") + "/src/Data/Pedidos.csv";
+    public static final String IMPORT_FILE_PATH_ESTADOS = System.getProperty("user.dir") + "/src/Data/Estados.csv";
+    public static final String IMPORT_FILE_PATH_ARTICULOPEDIDO = System.getProperty("user.dir") + "/src/Data/ArticuloPedido.csv";
     //Ruta del log de errores
-    public static final String ERRORLOG_FILE_PATH = System.getProperty("user.dir") + "\\src\\Data\\ErrorLog.txt";
+    public static final String ERRORLOG_FILE_PATH = System.getProperty("user.dir") + "/src/Data/ErrorLog.txt";
     //Caracter separador del CSV
     public static final String CSV_SPLIT_BY = ",";
     
