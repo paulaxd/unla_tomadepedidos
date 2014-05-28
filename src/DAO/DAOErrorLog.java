@@ -14,6 +14,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /***
@@ -32,6 +34,7 @@ public class DAOErrorLog {
      * @return True en caso de exito. False en caso de error.
      */
     public static boolean AgregarErrorLog(String metodo, String clase, String mensaje){
+        Calendar calendario = new GregorianCalendar();
         boolean flag = true;
         try{
             File file = new File(Utiles.ERRORLOG_FILE_PATH);
@@ -44,7 +47,7 @@ public class DAOErrorLog {
             }
             
             BufferedWriter out = new BufferedWriter(fstream);
-            out.write("Metodo: " + metodo + " - Clase: " + clase + " - Mensaje: " + mensaje);
+            out.write(calendario.getTime().toLocaleString() + " - Metodo: " + metodo + " - Clase: " + clase + " - Mensaje: " + mensaje);
             out.newLine();
 
             out.close();
